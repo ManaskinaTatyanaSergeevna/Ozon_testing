@@ -3,6 +3,8 @@ package pages;
 import com.codeborne.selenide.Selectors;
 import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Selectors.byClassName;
+import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 
 public class HotelsPage {
@@ -36,5 +38,41 @@ public class HotelsPage {
     //клик по кнопке "ЖД билеты"
     public void clickOnTrainTicketsButton(){
         $(trainTicketsButton).click();
+    }
+
+    //поле "Город или отель"
+    private By townOrHotelField = Selectors.byText("Город или отель");
+    //поле "Дата бронирования"
+    private By bookingDateField = Selectors.byText("Даты бронирования");
+    //поле "Размещение"
+    private By placementField = Selectors.byText("Размещение");
+    //кнопка "Найти отель"
+    private By findHotelButton = Selectors.byText("Найти отель");
+
+    //заполняем поле "Город или отель"
+    public void setTownOrHotelField(String townOrHotel){
+        $(townOrHotelField).setValue(townOrHotel);
+    }
+    //заполняем поле "Дата бронирования"
+    public void setBookingDateField(String monthFrom, String monthTo, int dateFrom, int dateTo){
+        $(bookingDateField).click();
+        $(byXpath("//*[contains(text(),'" + monthFrom + " 2023')] /../..//*[text()='" + dateFrom + "']")).click();
+        $(byXpath("//*[contains(text(),'" + monthTo + " 2023')] /../..//*[text()='" + dateTo + "']")).click();
+    }
+    //заполняем поле "Размещение"
+    public void setPlacementField(){
+        $(placementField).click();
+        $(Selectors.byClassName("aa5q")).click();
+    }
+    //кликаем на кнопку "Найти отель"
+    public void clickOnFindHotelButton(){
+        $(findHotelButton).click();
+    }
+    //заполнение формы поиска отеля
+    public void setFindHotelForm(String townOrHotel, String monthFrom, String monthTo, int dateFrom, int dateTo){
+        setTownOrHotelField(townOrHotel);
+        setBookingDateField(monthFrom, monthTo, dateFrom, dateTo);
+        setPlacementField();
+        clickOnFindHotelButton();
     }
 }
