@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.Selectors;
 import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 
 public class AirTicketsPage {
@@ -36,6 +37,70 @@ public class AirTicketsPage {
     //клик по кнопке "ЖД билеты"
     public void clickOnTrainTicketsButton(){
         $(trainTicketsButton).click();
+    }
+
+    //поле "Откуда"
+    private By whereFromField = Selectors.byText("Откуда");
+    //поле "Куда"
+    private By whereToField = Selectors.byText("Куда");
+    //поле даты "Туда"
+    private By dateThereToField = Selectors.byText("Туда");
+    //поле даты "Обратно"
+    private By dateThereFromField = Selectors.byText("Обратно");
+    //поле кол-ва пассажиров
+    private By passengersField = Selectors.byXpath("//label/div/div/div[contains(text(),'пассажир')]");
+    //кнопка "Найти билеты"
+    private By findTicketsButton = Selectors.byText("Найти билеты");
+
+    //заполняем поле "Откуда"
+    public void setWhereFromField(String fromTown){
+        $(whereFromField).setValue(fromTown);
+    }
+    //заполняем поле "Куда"
+    public void setWhereToField(String toTown){
+        $(whereToField).setValue(toTown);
+    }
+    //заполняем поле даты "Туда"
+    public void setDateThereToField(String monthTo, int dateTo){
+        $(dateThereFromField).click();
+        $(byXpath("//*[contains(text(),'" + monthTo + " 2023')] /../..//*[text()='" + dateTo + "']")).click();
+    }
+    //заполняем поле даты "Обратно"
+    public void setDateThereBackField(String monthBack, int dateBack){
+        $(dateThereToField).click();
+        $(byXpath("//*[contains(text(),'" + monthBack + " 2023')] /../..//*[text()='" + dateBack + "']")).click();
+    }
+    //заполняем поле кол-ва пассажиров
+    public void setPassengersField(String adult, int adultsCount, String children,
+                                   int childrenCount, String baby, int babiesCount, String howClass){
+        $(passengersField).click();
+        $(Selectors.byText(howClass)).click();
+        for (int i = 0; i < adultsCount; i++) {
+            $(byXpath("//*[contains(text(),'" + adult + "')] /../..//button[2]")).click();
+        }
+        for (int i = 0; i < childrenCount; i++) {
+            $(byXpath("//*[contains(text(),'" + children + "')] /../..//button[2]")).click();
+        }
+        for (int i = 0; i < babiesCount; i++) {
+            $(byXpath("//*[contains(text(),'" + baby + "')] /../..//button[2]")).click();
+        }
+    }
+    //клик по кнопке "Найти билеты"
+    public void clickOnFindAirTicketsButton(){
+        $(findTicketsButton).click();
+    }
+    //заполняем форму по заказу авиабилетов
+    public void setOrderAirTicketForm(String fromTown, String toTown,
+                                      String monthTo, int dateTo, String monthBack,
+                                      int dateBack, String adult, int adultsCount,
+                                      String children, int childrenCount, String baby,
+                                      int babiesCount, String howClass){
+        setWhereFromField(fromTown);
+        setWhereToField(toTown);
+        setDateThereToField(monthTo, dateTo);
+        setDateThereBackField(monthBack, dateBack);
+        setPassengersField(adult, adultsCount, children, childrenCount, baby, babiesCount, howClass);
+        clickOnFindAirTicketsButton();
     }
 
 }
