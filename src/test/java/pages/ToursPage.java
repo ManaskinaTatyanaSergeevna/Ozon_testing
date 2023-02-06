@@ -78,21 +78,27 @@ public class ToursPage {
         actions().dragAndDrop(source, target).perform();
     }
     //ввод количества туристов
-    public void setTouristsField(){
+    public void setTouristsField(int adultsCount, int childrenCount){
         $(touristsField).click();
-        $(byXpath("//button[@class='aaq5']")).click();
+        for (int i = 0; i < adultsCount; i++) {
+            $(byXpath("//*[contains(text(),'Взрослые')] /../..//button[2]")).click();
+        }
+        for (int i = 0; i < childrenCount; i++) {
+            $(byXpath("//*[contains(text(),'Дети')] /../..//button[2]")).click();
+        }
     }
     //нажать на кнопку "Найти туры"
     public void clickOnFindToursButton(){
         $(findToursButton).click();
     }
     //заполнить форму поиска тура
-    public void setFindForm(String town, String countryOrTown, String month, int date){
+    public void setFindForm(String town, String countryOrTown, String month,
+                            int date, int adultsCount, int childrenCount){
         setWhereFromField(town);
         setCountryOrTownField(countryOrTown);
         setDepartureDateField(month, date);
         setNumberOfNightsField();
-        setTouristsField();
+        setTouristsField(adultsCount, childrenCount);
         clickOnFindToursButton();
     }
 

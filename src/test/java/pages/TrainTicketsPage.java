@@ -70,21 +70,31 @@ public class TrainTicketsPage {
         $(byXpath("//*[contains(text(),'" + monthBack + " 2023')] /../..//*[text()='" + dateBack + "']")).click();
     }
     //заполнить поле "Сколько пассажиров?"
-    public void setPassengersField(){
+    public void setPassengersField(int adultsCount, int childrenCount, int babiesCount){
         $(passengersField).click();
-        $(Selectors.byClassName("naa6")).click();
+        for (int i = 0; i < adultsCount; i++) {
+            $(byXpath("//*[contains(text(),'Взрослые')] /../..//button[2]")).click();
+        }
+        for (int i = 0; i < childrenCount; i++) {
+            $(byXpath("//*[contains(text(),'от 0 до 10')] /../..//button[2]")).click();
+        }
+        for (int i = 0; i < babiesCount; i++) {
+            $(byXpath("//*[contains(text(),'до 5')] /../..//button[2]")).click();
+        }
     }
     //нажать на кнопку "Найти билеты"
     public void clickOnFindTicketsButton(){
         $(findTicketsButton).click();
     }
     //заполнить форму для поиска ЖД билетов
-    public void setFormFindTrainTickets(String fromTown, String toTown, String monthTo, int dateTo, String monthBack, int dateBack){
+    public void setFormFindTrainTickets(String fromTown, String toTown, String monthTo,
+                                        int dateTo, String monthBack, int dateBack,
+                                        int adultsCount, int childrenCount, int babiesCount){
         setWhereFromField(fromTown);
         setWhereToField(toTown);
         setDateThereField(monthTo, dateTo);
         setDateBackField(monthBack, dateBack);
-        setPassengersField();
+        setPassengersField(adultsCount, childrenCount, babiesCount);
         clickOnFindTicketsButton();
     }
 }

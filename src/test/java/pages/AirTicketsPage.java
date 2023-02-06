@@ -71,18 +71,17 @@ public class AirTicketsPage {
         $(byXpath("//*[contains(text(),'" + monthBack + " 2023')] /../..//*[text()='" + dateBack + "']")).click();
     }
     //заполняем поле кол-ва пассажиров
-    public void setPassengersField(String adult, int adultsCount, String children,
-                                   int childrenCount, String baby, int babiesCount, String howClass){
+    public void setPassengersField(int adultsCount, int childrenCount, int babiesCount, String comfortClass){
         $(passengersField).click();
-        $(Selectors.byText(howClass)).click();
+        $(Selectors.byText(comfortClass)).click();
         for (int i = 0; i < adultsCount; i++) {
-            $(byXpath("//*[contains(text(),'" + adult + "')] /../..//button[2]")).click();
+            $(byXpath("//*[contains(text(),'Взрослые')] /../..//button[2]")).click();
         }
         for (int i = 0; i < childrenCount; i++) {
-            $(byXpath("//*[contains(text(),'" + children + "')] /../..//button[2]")).click();
+            $(byXpath("//*[contains(text(),'от 2 до 11')] /../..//button[2]")).click();
         }
         for (int i = 0; i < babiesCount; i++) {
-            $(byXpath("//*[contains(text(),'" + baby + "')] /../..//button[2]")).click();
+            $(byXpath("//*[contains(text(),'младше 2')] /../..//button[2]")).click();
         }
     }
     //клик по кнопке "Найти билеты"
@@ -90,16 +89,14 @@ public class AirTicketsPage {
         $(findTicketsButton).click();
     }
     //заполняем форму по заказу авиабилетов
-    public void setOrderAirTicketForm(String fromTown, String toTown,
-                                      String monthTo, int dateTo, String monthBack,
-                                      int dateBack, String adult, int adultsCount,
-                                      String children, int childrenCount, String baby,
-                                      int babiesCount, String howClass){
+    public void setOrderAirTicketForm(String fromTown, String toTown, String monthTo,
+                                      int dateTo, String monthBack, int dateBack,
+                                      int adultsCount, int childrenCount, int babiesCount, String howClass){
         setWhereFromField(fromTown);
         setWhereToField(toTown);
         setDateThereToField(monthTo, dateTo);
         setDateThereBackField(monthBack, dateBack);
-        setPassengersField(adult, adultsCount, children, childrenCount, baby, babiesCount, howClass);
+        setPassengersField(adultsCount, childrenCount, babiesCount, howClass);
         clickOnFindAirTicketsButton();
     }
 

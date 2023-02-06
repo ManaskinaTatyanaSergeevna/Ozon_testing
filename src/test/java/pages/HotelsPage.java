@@ -60,19 +60,25 @@ public class HotelsPage {
         $(byXpath("//*[contains(text(),'" + monthTo + " 2023')] /../..//*[text()='" + dateTo + "']")).click();
     }
     //заполняем поле "Размещение"
-    public void setPlacementField(){
+    public void setPlacementField(int adultsCount, int childrenCount){
         $(placementField).click();
-        $(Selectors.byClassName("aa5q")).click();
+        for (int i = 0; i < adultsCount; i++) {
+            $(byXpath("//*[contains(text(),'Взрослые')] /../..//button[2]")).click();
+        }
+        for (int i = 0; i < childrenCount; i++) {
+            $(byXpath("//*[contains(text(),'Дети')] /../..//button[2]")).click();
+        }
     }
     //кликаем на кнопку "Найти отель"
     public void clickOnFindHotelButton(){
         $(findHotelButton).click();
     }
     //заполнение формы поиска отеля
-    public void setFindHotelForm(String townOrHotel, String monthFrom, String monthTo, int dateFrom, int dateTo){
+    public void setFindHotelForm(String townOrHotel, String monthFrom, String monthTo,
+                                 int dateFrom, int dateTo, int adultsCount, int childrenCount){
         setTownOrHotelField(townOrHotel);
         setBookingDateField(monthFrom, monthTo, dateFrom, dateTo);
-        setPlacementField();
+        setPlacementField(adultsCount, childrenCount);
         clickOnFindHotelButton();
     }
 }
