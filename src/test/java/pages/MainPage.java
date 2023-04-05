@@ -10,7 +10,7 @@ public class MainPage {
     //кнопка для перехода на "Ozon Fresh"
     private By ozonFreshButton = Selectors.byLinkText("Ozon fresh");
     //Нажать на кнопку "Озон Fresh"
-    public void ozonFreshButtonClick(){
+    public void clickOnOzonFreshButton(){
         $(ozonFreshButton).click();
     }
 

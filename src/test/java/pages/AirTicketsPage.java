@@ -8,8 +8,10 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class AirTicketsPage {
 
-    //текст для проверки перехода на страницу бронирования билетов, отелей и туров
-    private By airTicketsPageText = Selectors.byText("Поиск дешёвых авиабилетов");
+    //получить текст для проверки перехода на страницу бронирования билетов, отелей и туров
+    public By getAirTicketsPageText(){
+            return Selectors.byText("Поиск дешёвых авиабилетов");
+    }
 
     //кнопка перехода на вкладку "Отели"
     private By hotelsButton = Selectors.byXpath("//span[text()='Отели']");
@@ -33,16 +35,16 @@ public class AirTicketsPage {
     }
 
     //кнопка перехода на вкладку "ЖД билеты"
-    private By trainTicketsButton = Selectors.byXpath("//span[text()='ЖД билеты']");
+    private By trainTicketsButton = Selectors.byXpath("//span[contains(text(),'ЖД')]");
     //клик по кнопке "ЖД билеты"
     public void clickOnTrainTicketsButton(){
         $(trainTicketsButton).click();
     }
 
     //поле "Откуда"
-    private By whereFromField = Selectors.byText("Откуда");
+    private By whereFromField = Selectors.byName("travelSearchFrom");
     //поле "Куда"
-    private By whereToField = Selectors.byText("Куда");
+    private By whereToField = Selectors.byName("travelSearchTo");
     //поле даты "Туда"
     private By dateThereToField = Selectors.byText("Туда");
     //поле даты "Обратно"
@@ -54,10 +56,13 @@ public class AirTicketsPage {
 
     //заполняем поле "Откуда"
     public void setWhereFromField(String fromTown){
+        $(whereFromField).click();
         $(whereFromField).setValue(fromTown);
+        $(Selectors.byXpath("//div/div[@class='a4bc'][1]")).click();
     }
     //заполняем поле "Куда"
     public void setWhereToField(String toTown){
+        $(whereToField).click();
         $(whereToField).setValue(toTown);
     }
     //заполняем поле даты "Туда"
@@ -74,7 +79,7 @@ public class AirTicketsPage {
     public void setPassengersField(int adultsCount, int childrenCount, int babiesCount, String comfortClass){
         $(passengersField).click();
         $(Selectors.byText(comfortClass)).click();
-        for (int i = 0; i < adultsCount; i++) {
+        for (int i = 1; i < adultsCount; i++) {
             $(byXpath("//*[contains(text(),'Взрослые')] /../..//button[2]")).click();
         }
         for (int i = 0; i < childrenCount; i++) {
